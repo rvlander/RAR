@@ -16,6 +16,7 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFrame;
+import rar.inputs.KeyManager;
 
 /**
  *
@@ -84,11 +85,12 @@ public class RAR implements GLEventListener {
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
         GLCanvas canvas = new GLCanvas(caps);
-
-        JFrame frame = new JFrame("SpaceInvaders");
+        
+        JFrame frame = new JFrame();
+        frame.setUndecorated(true);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         canvas.setSize(1920, 1080);
         frame.getContentPane().add(canvas);
-        frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setFocusable(true);
@@ -103,8 +105,8 @@ public class RAR implements GLEventListener {
         });
 
         canvas.addGLEventListener(new RAR(glp));
-        //canvas.addKeyListener(in);
-        //canvas.requestFocus();
+        canvas.addKeyListener(new KeyManager());
+        canvas.requestFocus();
         Animator animator = new Animator(canvas);
         animator.start();
     }
