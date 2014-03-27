@@ -17,6 +17,19 @@ import javax.media.opengl.GLProfile;
 public class SceneObject {
 
     public SceneObject() {
+        float[] _PMatrix = {2.7128f, 0, 0,
+            0, 4.8345f, 0,
+            -0.1220f, -0.1234f, 1};
+        PVMatrix = _PMatrix;
+
+        float[] _MMatrix = {
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        };
+        MMatrix = _MMatrix;
+        
     }
 
     public void render(GL4 gl4, GLProfile glp, int x, int y) {
@@ -41,6 +54,7 @@ public class SceneObject {
             vertexPositionAttribute = gl4.glGetAttribLocation(program, "MCVertex");
 
             matrixUniform = gl4.glGetUniformLocation(program, "KK");
+            modelMatrixUniform = gl4.glGetUniformLocation(program, "MMatrix");
 
             initBuffers(gl4);
 
@@ -52,12 +66,8 @@ public class SceneObject {
 
         gl4.glEnableVertexAttribArray(vertexPositionAttribute);
 
-        float[] _PMatrix = {2.7128f, 0, 0,
-            0, 4.8345f, 0,
-            -0.1220f, -0.1234f, 1};
-        PVMatrix = _PMatrix;
-
         gl4.glUniformMatrix3fv(matrixUniform, 1, false, PVMatrix, 0);
+        gl4.glUniformMatrix4fv(modelMatrixUniform, 1, false, MMatrix, 0);
 
         gl4.glBindBuffer(gl4.GL_ARRAY_BUFFER, this.vertexPositionBuffer[0]);
         gl4.glVertexAttribPointer(vertexPositionAttribute, 3, gl4.GL_FLOAT, false, 0, 0);
@@ -111,24 +121,25 @@ public class SceneObject {
         gl4.glGenBuffers(1, vertexPositionBuffer, 0);
         gl4.glBindBuffer(gl4.GL_ARRAY_BUFFER, vertexPositionBuffer[0]);
         float[] data = {100f, 100f, 800f,
-         100, 0f, 800f,
-         100f, 100f, 400f,
-         100f, 0f, 400f};
+            100, 0f, 800f,
+            100f, 100f, 400f,
+            100f, 0f, 400f};
 
         /*float[] data = {0f, 0.01f+0.02f, 0.1f,
-            0, 0f, 0.1f+0.02f, 0.1f,
-            0.1f, 0.01f+0.02f, 0.1f,
-            0.1f, 0.1f+0.02f, 0.1f};*/
-
+         0, 0f, 0.1f+0.02f, 0.1f,
+         0.1f, 0.01f+0.02f, 0.1f,
+         0.1f, 0.1f+0.02f, 0.1f};*/
         FloatBuffer vertices = Buffers.newDirectFloatBuffer(data);
         gl4.glBufferData(gl4.GL_ARRAY_BUFFER, data.length * Float.SIZE, vertices.rewind(), gl4.GL_STATIC_DRAW);
     }
 
     private static String vertexShaderSource
             = "in vec3 MCVertex;\n"
+            + "uniform mat4 MMatrix;"
             + "uniform mat3 KK;\n"
             + "void main () {\n"
-            + "vec3 xn = MCVertex/MCVertex.z;"
+            + "vec4 x = MMatrix*vec4(MCVertex,1.0);"
+            + "vec3 xn = x.xyz/x.z;"
             + "vec3 p = KK*xn;"
             + "gl_Position = vec4(p.xy,0,1.0);\n"
             + "}\n";
@@ -141,11 +152,17 @@ public class SceneObject {
     private int vertexPositionAttribute;
 
     private int matrixUniform;
+    private int modelMatrixUniform;
     private int program;
     private float[] PVMatrix;
+    private float[] MMatrix;
 
     private int[] vertexPositionBuffer = new int[1];
 
     private boolean shaderInitialized = false;
+
+    public void update() {
+       MMatrix[14] += 300;
+    }
 
 }

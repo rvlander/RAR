@@ -27,6 +27,7 @@ public class GameManager {
     }
 
     public void update(float deltaTime) {
+        obj.update();
     }
 
     public void render(GL4 gl, GLProfile glp) {
