@@ -87,23 +87,16 @@ public class RAR implements GLEventListener {
         GLCanvas canvas = new GLCanvas(caps);
         
         JFrame frame = new JFrame();
-        frame.setUndecorated(true);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        canvas.setSize(1920, 1080);
+        //frame.setUndecorated(true);
+       // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        canvas.setSize(1280, 720);
         frame.getContentPane().add(canvas);
         frame.setResizable(false);
+        frame.pack();
         frame.setVisible(true);
         frame.setFocusable(true);
-
-        // by default, an AWT Frame doesn't do anything when you click
-        // the close button; this bit of code will terminate the program when
-        // the window is asked to close
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         canvas.addGLEventListener(new RAR(glp));
         canvas.addKeyListener(new KeyManager());
         canvas.requestFocus();

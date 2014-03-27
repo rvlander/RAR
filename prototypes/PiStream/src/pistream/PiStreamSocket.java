@@ -5,10 +5,8 @@
  */
 package pistream;
 
-import com.xuggle.mediatool.IMediaGenerator;
 import com.xuggle.mediatool.IMediaListener;
 import com.xuggle.mediatool.IMediaReader;
-import com.xuggle.mediatool.MediaListenerAdapter;
 import com.xuggle.mediatool.ToolFactory;
 import com.xuggle.mediatool.event.IAddStreamEvent;
 import com.xuggle.mediatool.event.IAudioSamplesEvent;
@@ -23,7 +21,8 @@ import com.xuggle.mediatool.event.IWriteHeaderEvent;
 import com.xuggle.mediatool.event.IWritePacketEvent;
 import com.xuggle.mediatool.event.IWriteTrailerEvent;
 import com.xuggle.xuggler.IContainer;
-import com.xuggle.xuggler.IContainerFormat;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,30 +30,35 @@ import java.net.InetSocketAddress;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.channels.spi.SelectorProvider;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author rvlander
  */
-public class PiStreamSocket implements IMediaListener{
+public class PiStreamSocket implements IMediaListener, KeyListener{
     
     ImagePanel ip;
     int i=0;
+    BufferedImage im;
+    int cpt;
     
     public PiStreamSocket(ImagePanel im){
         ip = im;
-    }
+        cpt=1;
+        ip.addKeyListener(this);
+   }
 
     @Override
-    public void onVideoPicture(IVideoPictureEvent ivpe) {
+    public synchronized void onVideoPicture(IVideoPictureEvent ivpe) {
         //System.out.println(ivpe.getPicture().getHeight() +" "+ivpe.getImage());
         //i++;
-        ip.setImage(ivpe.getImage());
+        im = ivpe.getImage();
+        ip.setImage(im);
         /*try {
             ImageIO.write(ivpe.getImage(), "png", new File("toto/im"+i+".png"));
         } catch (IOException ex) {
@@ -114,10 +118,12 @@ public class PiStreamSocket implements IMediaListener{
             JFrame jframe = new JFrame();
             jframe.setSize(1920, 1080);
             jframe.setVisible(true);
+            jframe.setFocusable(true);
             jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             ImagePanel pane = new ImagePanel();
             jframe.getContentPane().add(pane);
             pane.setSize(jframe.getSize());
+            
             ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
             
             serverSocketChannel.socket().bind(new InetSocketAddress(5001));
@@ -129,6 +135,8 @@ public class PiStreamSocket implements IMediaListener{
             IContainer container = IContainer.make();
             System.out.println(container.open((ReadableByteChannel)socketChannel, null));
             
+            pane.requestFocus();
+            
             IMediaReader reader = ToolFactory.makeReader(container);
             reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
             reader.addListener(new PiStreamSocket(pane));
@@ -137,6 +145,24 @@ public class PiStreamSocket implements IMediaListener{
             Logger.getLogger(PiStreamSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    @Override
+    public synchronized void keyTyped(KeyEvent e) {
+        try {
+            ImageIO.write(im, "png", new File("toto"+cpt+"png"));
+            cpt++;
+        } catch (IOException ex) {
+            Logger.getLogger(PiStreamSocket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 
 }

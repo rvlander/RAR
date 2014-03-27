@@ -61,10 +61,10 @@ public class Image {
             linkProgram(gl4, program);
 
             vertexPositionAttribute = gl4.glGetAttribLocation(program, "MCVertex");
-            gl4.glEnableVertexAttribArray(vertexPositionAttribute);
+            
 
             vertexTexCoordAttribute = gl4.glGetAttribLocation(program, "TexCoord0");
-            gl4.glEnableVertexAttribArray(vertexTexCoordAttribute);
+            
 
             samplerUniform = gl4.glGetUniformLocation(program, "image");
             matrixUniform = gl4.glGetUniformLocation(program, "PMatrix");
@@ -80,6 +80,9 @@ public class Image {
             texture = AWTTextureIO.newTexture(glp, bufferedImage, false);
 
             gl4.glUseProgram(program);
+            
+            gl4.glEnableVertexAttribArray(vertexPositionAttribute);
+            gl4.glEnableVertexAttribArray(vertexTexCoordAttribute);
 
             gl4.glBindBuffer(gl4.GL_ARRAY_BUFFER, this.vertexPositionBuffer[0]);
             gl4.glVertexAttribPointer(vertexPositionAttribute, 2, gl4.GL_FLOAT, false, 0, 0);
@@ -102,6 +105,9 @@ public class Image {
             gl4.glDrawArrays(gl4.GL_TRIANGLE_STRIP, 0, 4);
 
             texture.destroy(gl4);
+            
+            gl4.glDisableVertexAttribArray(vertexPositionAttribute);
+            gl4.glDisableVertexAttribArray(vertexTexCoordAttribute);
         }
 
     }
@@ -155,7 +161,7 @@ public class Image {
 
         FloatBuffer vertices = Buffers.newDirectFloatBuffer(data);
         vertices.rewind();
-        gl4.glBufferData(gl4.GL_ARRAY_BUFFER, 8 * 4, vertices, gl4.GL_STATIC_DRAW);
+        gl4.glBufferData(gl4.GL_ARRAY_BUFFER, data.length + Float.SIZE, vertices.rewind(), gl4.GL_STATIC_DRAW);
 
         gl4.glGenBuffers(1, vertexTexCoordBuffer, 0);
         gl4.glBindBuffer(gl4.GL_ARRAY_BUFFER, vertexTexCoordBuffer[0]);
@@ -164,8 +170,7 @@ public class Image {
             1.0f, 1.0f,
             1.0f, 0.0f};
         FloatBuffer coords = Buffers.newDirectFloatBuffer(tc);
-        coords.rewind();
-        gl4.glBufferData(gl4.GL_ARRAY_BUFFER, 8 * 4, coords, gl4.GL_STATIC_DRAW);
+        gl4.glBufferData(gl4.GL_ARRAY_BUFFER, tc.length * Float.SIZE, coords.rewind(), gl4.GL_STATIC_DRAW);
 
     }
 
