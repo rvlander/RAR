@@ -6,12 +6,17 @@
 
 package rar.imageinput;
 
+import rar.utils.Options;
+
 /**
  *
  * @author rvlander
  */
 public class ImageGetterFactory {
     public static ImageGetter createImageGetter(){
+        if(Options.getSamplerType().equals("pi"))
         return new PiImageGetter();
+        else
+            return new StillImageGetter();
     }
 }
