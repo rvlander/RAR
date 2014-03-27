@@ -40,7 +40,7 @@ public class SceneObject {
 
             vertexPositionAttribute = gl4.glGetAttribLocation(program, "MCVertex");
 
-            matrixUniform = gl4.glGetUniformLocation(program, "PVMatrix");
+            matrixUniform = gl4.glGetUniformLocation(program, "KK");
 
             initBuffers(gl4);
 
@@ -52,14 +52,12 @@ public class SceneObject {
 
         gl4.glEnableVertexAttribArray(vertexPositionAttribute);
 
-
-        float[] _PMatrix = {1, 0, 0, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1};
+        float[] _PMatrix = {2.7128f, 0, 0,
+            0, 4.8345f, 0,
+            -0.1220f, -0.1234f, 1};
         PVMatrix = _PMatrix;
 
-        gl4.glUniformMatrix4fv(matrixUniform, 1, false, PVMatrix, 0);
+        gl4.glUniformMatrix3fv(matrixUniform, 1, false, PVMatrix, 0);
 
         gl4.glBindBuffer(gl4.GL_ARRAY_BUFFER, this.vertexPositionBuffer[0]);
         gl4.glVertexAttribPointer(vertexPositionAttribute, 3, gl4.GL_FLOAT, false, 0, 0);
@@ -67,7 +65,6 @@ public class SceneObject {
         gl4.glDrawArrays(gl4.GL_TRIANGLE_STRIP, 0, 4);
 
         gl4.glDisableVertexAttribArray(vertexPositionAttribute);
-
 
     }
 
@@ -113,10 +110,15 @@ public class SceneObject {
 
         gl4.glGenBuffers(1, vertexPositionBuffer, 0);
         gl4.glBindBuffer(gl4.GL_ARRAY_BUFFER, vertexPositionBuffer[0]);
-        float[] data = {0.2f, 0.2f, -0.1f,
-            0, 0.2f, -0.1f,
-            0.2f, 0, 1f,
-            0, 0, 1};
+        float[] data = {100f, 100f, 800f,
+         100, 0f, 800f,
+         100f, 100f, 400f,
+         100f, 0f, 400f};
+
+        /*float[] data = {0f, 0.01f+0.02f, 0.1f,
+            0, 0f, 0.1f+0.02f, 0.1f,
+            0.1f, 0.01f+0.02f, 0.1f,
+            0.1f, 0.1f+0.02f, 0.1f};*/
 
         FloatBuffer vertices = Buffers.newDirectFloatBuffer(data);
         gl4.glBufferData(gl4.GL_ARRAY_BUFFER, data.length * Float.SIZE, vertices.rewind(), gl4.GL_STATIC_DRAW);
@@ -124,9 +126,11 @@ public class SceneObject {
 
     private static String vertexShaderSource
             = "in vec3 MCVertex;\n"
-            + "uniform mat4 PVMatrix;\n"
+            + "uniform mat3 KK;\n"
             + "void main () {\n"
-            + "gl_Position = PVMatrix*vec4(MCVertex,1.0);\n"
+            + "vec3 xn = MCVertex/MCVertex.z;"
+            + "vec3 p = KK*xn;"
+            + "gl_Position = vec4(p.xy,0,1.0);\n"
             + "}\n";
 
     private static String fragShaderSource
