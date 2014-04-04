@@ -8,6 +8,8 @@ package rar.main;
 import javax.media.opengl.GL4;
 import javax.media.opengl.GLProfile;
 import rar.imageinput.ImageGetterFactory;
+import rar.simu.Racer;
+import rar.simu.SocketCar;
 import rar.utils.Image;
 import rar.utils.SceneObject;
 
@@ -19,10 +21,12 @@ public class GameManager {
 
     Image im;
     SceneObject obj;
+    Racer player;
 
     public GameManager() {
         im = new Image(1280, 720, ImageGetterFactory.createImageGetter());
         obj = new SceneObject();
+        player = new Racer(new SocketCar());
 
     }
 
@@ -36,4 +40,19 @@ public class GameManager {
         obj.render(gl, glp, 0, 0);
     }
 
+    public void turnLeft(double d) {
+        player.turnLeft(d);
+    }
+
+    public void turnRight(double d) {
+        player.turnRight(d);
+    }
+
+    public void moveForward(double d) {
+        player.moveForward(d);
+    }
+
+    public void moveBackward(double d) {
+        player.moveBackward(d);
+    }
 }

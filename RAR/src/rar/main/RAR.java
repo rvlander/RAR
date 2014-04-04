@@ -35,7 +35,7 @@ public class RAR implements GLEventListener {
     public RAR(GLProfile p) {
         gameManager = new GameManager();
         before = new Date().getTime();
-        glp =p;
+        glp = p;
     }
 
     @Override
@@ -62,20 +62,36 @@ public class RAR implements GLEventListener {
         long now = new Date().getTime();
         double deltaTime = ((double) now - before) / 1000;
         before = now;
-        gameManager.update((float)deltaTime);
+        gameManager.update((float) deltaTime);
     }
 
     private void render(GLAutoDrawable drawable) {
         GL4 gl = drawable.getGL().getGL4();
-        
-        gl.glBlendFunc (gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA);
-        gl.glEnable (gl.GL_BLEND);
+
+        gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA);
+        gl.glEnable(gl.GL_BLEND);
 
         gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         gl.glClear(gl.GL_COLOR_BUFFER_BIT);
 
-        gameManager.render(gl,glp);
+        gameManager.render(gl, glp);
 
+    }
+
+    public void turnLeft(double d) {
+        gameManager.turnLeft(d);
+    }
+
+    public void turnRight(double d) {
+        gameManager.turnRight(d);
+    }
+
+    public void moveForward(double d) {
+        gameManager.moveForward(d);
+    }
+
+    public void moveBackward(double d) {
+        gameManager.moveBackward(d);
     }
 
     /**
@@ -85,10 +101,10 @@ public class RAR implements GLEventListener {
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
         GLCanvas canvas = new GLCanvas(caps);
-        
+
         JFrame frame = new JFrame();
         //frame.setUndecorated(true);
-       // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         canvas.setSize(1280, 720);
         frame.getContentPane().add(canvas);
         frame.setResizable(false);
@@ -96,11 +112,13 @@ public class RAR implements GLEventListener {
         frame.setVisible(true);
         frame.setFocusable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        canvas.addGLEventListener(new RAR(glp));
-        canvas.addKeyListener(new KeyManager());
+
+        RAR rar = new RAR(glp);
+        canvas.addGLEventListener(rar);
+        canvas.addKeyListener(new KeyManager(rar));
         canvas.requestFocus();
         Animator animator = new Animator(canvas);
         animator.start();
     }
+
 }

@@ -34,6 +34,7 @@ public class Options {
             if (!Options.validate()) {
                 setSamplerType("pi");
                 setVideoPort(5001);
+                setControlPort(8888);
                 setPiIP("192.168.2.1");
             }
         } catch (IOException ex) {
@@ -46,6 +47,7 @@ public class Options {
         res &= Options.getSamplerType() != null;
         res &= Options.getVideoPort()!= null;
         res &= Options.getPiIP() != null;
+        res &= Options.getControlPort()!= null;
         return res;
     }
 

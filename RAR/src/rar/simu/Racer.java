@@ -14,13 +14,13 @@ import java.util.ArrayList;
 public class Racer {
 
     private ArrayList<RacerListener> listeners;
-    ConcreteCar car;
+    private ConcreteCar car;
 
     public Racer() {
 
     }
 
-    public Racer(ConcreteCar Car) {
+    public Racer(ConcreteCar car) {
         this.car = car;
     }
 
