@@ -29,6 +29,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rar.utils.Options;
 
 /**
  *
@@ -41,12 +42,7 @@ class PiImageGetter implements ImageGetter, IMediaListener {
 
     public PiImageGetter() {
         try {
-            ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-
-            serverSocketChannel.socket().bind(new InetSocketAddress(5001));
-
-            SocketChannel socketChannel
-                    = serverSocketChannel.accept();
+            SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(Options.getPiIP(),Options.getVideoPort()));
 
             IContainer container = IContainer.make();
             System.out.println(container.open((ReadableByteChannel) socketChannel, null));

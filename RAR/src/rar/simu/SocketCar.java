@@ -18,6 +18,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rar.utils.Options;
 
 /**
  *
@@ -30,7 +31,7 @@ public class SocketCar implements ConcreteCar{
     public SocketCar(){
         try {
             Socket socket = new Socket();
-            socket.connect(new InetSocketAddress("192.168.2.1",8888));
+            socket.connect(new InetSocketAddress(Options.getPiIP(),Options.getControlPort()));
             pw = new PrintWriter(socket.getOutputStream());
         } catch (SocketException ex) {
             Logger.getLogger(SocketCar.class.getName()).log(Level.SEVERE, null, ex);
