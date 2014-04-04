@@ -5,15 +5,18 @@
  */
 package rar.inputs;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.Timer;
 import rar.main.RAR;
 
 /**
  *
  * @author rvlander
  */
-public class KeyManager implements KeyListener {
+public class KeyManager implements KeyListener, ActionListener {
 
     private RAR rar;
 
@@ -22,8 +25,25 @@ public class KeyManager implements KeyListener {
     private boolean left;
     private boolean right;
 
+    private Timer upTimer;
+    private Timer downTimer;
+    private Timer leftTimer;
+    private Timer rightTimer;
+    
+    private long delay=1;
+
     public KeyManager(RAR rar) {
         this.rar = rar;
+        
+        upTimer = new Timer(1, this);
+        downTimer = new Timer(1, this);
+        leftTimer = new Timer(1, this);
+        rightTimer = new Timer(1, this);
+        
+        upTimer.setRepeats(false);
+        downTimer.setRepeats(false);
+        leftTimer.setRepeats(false);
+        rightTimer.setRepeats(false);
     }
 
     @Override
@@ -34,15 +54,19 @@ public class KeyManager implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
+                upTimer.stop();
                 up = true;
                 break;
             case KeyEvent.VK_DOWN:
+                downTimer.stop();
                 down = true;
                 break;
             case KeyEvent.VK_LEFT:
+                leftTimer.stop();
                 left = true;
                 break;
             case KeyEvent.VK_RIGHT:
+                rightTimer.stop();
                 right = true;
                 break;
             case KeyEvent.VK_ESCAPE:
@@ -55,27 +79,44 @@ public class KeyManager implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                up = false;
+                upTimer.start();
                 break;
             case KeyEvent.VK_DOWN:
-                down = false;
+                downTimer.start();
                 break;
             case KeyEvent.VK_LEFT:
-                left = false;
+                leftTimer.start();
                 break;
             case KeyEvent.VK_RIGHT:
-                right = false;
+                rightTimer.start();
                 break;
         }
-        sendState();
     }
 
     public void sendState() {
+        System.out.println("Sending state : " + up + " " + down + " " + left + " " + right);
         rar.moveForward(up ? 1 : 0);
         rar.moveBackward(down ? 1 : 0);
         rar.turnLeft(left ? 1 : 0);
         rar.turnRight(right ? 1 : 0);
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == upTimer){
+            up = false;
+        }
+        else if (e.getSource() == downTimer){
+            down = false;
+        }
+        else if (e.getSource() == leftTimer){
+            left = false;
+        }
+        else if (e.getSource() == rightTimer){
+            right=false;
+        }
+        sendState();
     }
 
 }
