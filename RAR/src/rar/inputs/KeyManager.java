@@ -94,7 +94,6 @@ public class KeyManager implements KeyListener, ActionListener {
     }
 
     public void sendState() {
-        System.out.println("Sending state : " + up + " " + down + " " + left + " " + right);
         rar.moveForward(up ? 1 : 0);
         rar.moveBackward(down ? 1 : 0);
         rar.turnLeft(left ? 1 : 0);
