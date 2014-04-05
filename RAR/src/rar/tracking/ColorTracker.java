@@ -109,6 +109,7 @@ public class ColorTracker implements Tracker {
                         y = (moment.get_m01() / area);
                         refArea = area;
                         objList.add(new TrackedObject(x,y,size));
+                            //System.out.println("Object found!");
                     }
                 }
 
@@ -209,6 +210,15 @@ public class ColorTracker implements Tracker {
 
     public BufferedImage getThreshold() {
         return TrackerUtils.toBufferedImage(threshold);
+    }
+    
+    public void  saveOptions(){
+        Options.setHMin(HMin);
+        Options.setHMax(HMax);
+        Options.setSMin(SMin);
+        Options.setSMax(SMax);
+        Options.setVMin(VMin);
+        Options.setVMax(VMax);
     }
 
     

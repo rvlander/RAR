@@ -50,8 +50,9 @@ public class ColorTrackerBars extends javax.swing.JPanel {
         jSliderVMIN = new javax.swing.JSlider();
         jLabel7 = new javax.swing.JLabel();
         jSliderVMAX = new javax.swing.JSlider();
+        jButtonParameters = new javax.swing.JButton();
 
-        setLayout(new java.awt.GridLayout(6, 2));
+        setLayout(new java.awt.GridLayout(7, 2));
 
         jLabel1.setText("HUE MIN");
         add(jLabel1);
@@ -124,6 +125,14 @@ public class ColorTrackerBars extends javax.swing.JPanel {
             }
         });
         add(jSliderVMAX);
+
+        jButtonParameters.setText("Save Parameters");
+        jButtonParameters.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonParametersActionPerformed(evt);
+            }
+        });
+        add(jButtonParameters);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSliderHMINStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderHMINStateChanged
@@ -156,8 +165,13 @@ public class ColorTrackerBars extends javax.swing.JPanel {
         ct.setVMax(js.getValue());
     }//GEN-LAST:event_jSliderVMAXStateChanged
 
+    private void jButtonParametersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonParametersActionPerformed
+        ct.saveOptions();
+    }//GEN-LAST:event_jButtonParametersActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonParameters;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -25,7 +25,9 @@ public class ImagePanel extends JPanel{
     
     @Override
     public void paint(Graphics g){
-        g.drawImage(im, 0, 0, null);
+        if(im !=null){
+            g.drawImage(im, 0, 0, this.getWidth(), this.getHeight(), 0, 0, im.getWidth(), im.getHeight(), null);
+        }
         drawGraphics((Graphics2D)g);
     }
     
