@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class Server {
 
     RaceEngine raceEngine;
-
     ServerSocket socket;
 
     Server(RaceEngine re) {
@@ -51,26 +50,8 @@ public class Server {
     }
     
     private void handleNewClient(Socket s){
-        try {
             System.out.println("New client " + s.getInetAddress().getHostAddress() +" connected.");
-            BufferedReader bb = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            PrintWriter pw = new PrintWriter(s.getOutputStream());
-            ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-            
-            while(true){
-                String line = bb.readLine();
-                handleLine(line,pw,oos);
-            }
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(0);
-        }         
-    }
-
-    private void handleLine(String line, PrintWriter pw, ObjectOutputStream oos) {
-        char c = line.charAt(0);
-        
+            new Thread(new Connection(s, raceEngine)).start();
     }
 
 }

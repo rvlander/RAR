@@ -5,10 +5,15 @@
  */
 package rar.client;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.media.opengl.GL4;
 import javax.media.opengl.GLProfile;
+import rar.imageinput.ImageGetter;
 import rar.imageinput.ImageGetterFactory;
+import rar.server.Bullet;
 import rar.utils.Image;
+import rar.utils.Options;
 import rar.utils.SceneObject;
 
 /**
@@ -17,24 +22,33 @@ import rar.utils.SceneObject;
  */
 public class GameManager {
 
-    Image im;
+    Image image;
+    ImageGetter imageGetter;
     SceneObject obj;
     Player player;
+    ArrayList<Bullet> bullets;
 
     public GameManager() {
-        im = new Image(1280, 720, ImageGetterFactory.createImageGetter());
+        
+        bullets = new ArrayList<>();
+        imageGetter = ImageGetterFactory.createImageGetter();
+        
+        
+        image = new Image(Options.getImageWidth(), Options.getImageHeight());
         obj = new SceneObject();
         player = new Player(new SocketCar());
 
     }
 
     public void update(float deltaTime) {
+        BufferedImage bi = imageGetter.getImage();
+        image.setImage(bi);
         obj.update();
     }
 
     public void render(GL4 gl, GLProfile glp) {
 
-        im.render(gl, glp, 0, 0);
+        image.render(gl, glp, 0, 0);
         obj.render(gl, glp, 0, 0);
     }
 

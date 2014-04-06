@@ -12,17 +12,6 @@ import java.io.Serializable;
  *
  * @author rvlander
  */
-public class Bullet implements Serializable{
-    
-    private Racer sender;
-    
-    public Bullet(Racer sender){
-        this.sender = sender;
-    }
-
-    void update(double deltaTime) {
-    }
-    
-    
+class Racer implements Serializable{
     
 }

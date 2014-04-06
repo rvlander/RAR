@@ -25,10 +25,9 @@ public class Image {
     private boolean shaderInitialized = false;
     private int width;
     private int height;
-    private ImageGetter imageGetter;
+    private BufferedImage bufferedImage;
 
-    public Image(int w, int h, ImageGetter ig) {
-        imageGetter = ig;
+    public Image(int w, int h) {
         width = w;
         height = h;
     }
@@ -39,6 +38,10 @@ public class Image {
 
     public int getHeight() {
         return height;
+    }
+    
+    public void setImage(BufferedImage im){
+        bufferedImage = im;
     }
 
     public void render(GL4 gl4, GLProfile glp, int x, int y) {
@@ -74,7 +77,7 @@ public class Image {
             shaderInitialized = true;
 
         }
-        BufferedImage bufferedImage = imageGetter.getImage();
+        //BufferedImage bufferedImage = imageGetter.getImage();
 
         if (bufferedImage != null) {
             texture = AWTTextureIO.newTexture(glp, bufferedImage, false);

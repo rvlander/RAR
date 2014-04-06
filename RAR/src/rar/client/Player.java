@@ -5,9 +5,7 @@
  */
 package rar.client;
 
-import java.util.ArrayList;
 import rar.server.Bullet;
-import rar.junk.RacerListener;
 
 /**
  *
@@ -22,7 +20,7 @@ public class Player {
     }
 
     public void shoot() {
-        Bullet b = new Bullet(this);
+        //Bullet b = new Bullet(this);
         //reseau
     }
 

@@ -6,32 +6,29 @@
 
 package rar.server;
 
-import rar.junk.RacerListener;
-import rar.client.Player;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import rar.junk.RacerListener;
 
 /**
  *
  * @author rvlander
  */
-public class World implements RacerListener {
+public class World implements RacerListener, Serializable {
     
-    private ArrayList<Player> racers;
+    private HashMap<String,Racer> racers;
     private ArrayList<Bullet> bullets;
     
-    public World(){
-        racers = new ArrayList<>();
+    public World(HashMap<String,Racer> r){
+        racers = r;
         bullets = new ArrayList<>();
     }
     
     public void update(double deltaTime){
-        for(Player racer : racers){
+        /*for(Player racer : racers){
         }
-        updateBullets(deltaTime);
-    }
-    
-    public void addRacer(Player r){
-        racers.add(r);
+        up*///dateBullets(deltaTime);
     }
 
     @Override
