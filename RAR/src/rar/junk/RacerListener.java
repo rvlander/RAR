@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.simu;
+
+package rar.junk;
+
+import rar.server.Bullet;
 
 /**
  *
  * @author rvlander
  */
-public interface ConcreteCar {
-
-    public void turnLeft(double d);
-
-    public void turnRight(double d);
-
-    public void moveForward(double d);
-
-    public void moveBackward(double d);
-
+public interface RacerListener {
+    
+    public void bulletLaunched(Bullet b);
+    
 }

@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package rar.simu;
+package rar.client;
 
+import rar.client.ConcreteCar;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.DatagramSocket;

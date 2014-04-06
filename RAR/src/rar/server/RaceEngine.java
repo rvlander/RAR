@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 
-package rar.simu;
+package rar.server;
 
 /**
  *
  * @author rvlander
  */
-public interface RacerListener {
-    
-    public void bulletLaunched(Bullet b);
+public class RaceEngine {
     
 }

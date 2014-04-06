@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 
-package rar.simu;
+package rar.server;
 
+import rar.junk.RacerListener;
+import rar.client.Player;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +16,7 @@ import java.util.ArrayList;
  */
 public class World implements RacerListener {
     
-    private ArrayList<Racer> racers;
+    private ArrayList<Player> racers;
     private ArrayList<Bullet> bullets;
     
     public World(){
@@ -23,15 +25,13 @@ public class World implements RacerListener {
     }
     
     public void update(double deltaTime){
-        for(Racer racer : racers){
-            racer.update(deltaTime);
+        for(Player racer : racers){
         }
         updateBullets(deltaTime);
     }
     
-    public void addRacer(Racer r){
+    public void addRacer(Player r){
         racers.add(r);
-        r.addListener(this);
     }
 
     @Override

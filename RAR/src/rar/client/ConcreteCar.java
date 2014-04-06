@@ -3,24 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package rar.simu;
+package rar.client;
 
 /**
  *
  * @author rvlander
  */
-public class Bullet {
-    
-    private Racer sender;
-    
-    public Bullet(Racer sender){
-        this.sender = sender;
-    }
+public interface ConcreteCar {
 
-    void update(double deltaTime) {
-    }
-    
-    
-    
+    public void turnLeft(double d);
+
+    public void turnRight(double d);
+
+    public void moveForward(double d);
+
+    public void moveBackward(double d);
+
 }

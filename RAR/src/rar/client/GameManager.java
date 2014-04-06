@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.main;
+package rar.client;
 
 import javax.media.opengl.GL4;
 import javax.media.opengl.GLProfile;
 import rar.imageinput.ImageGetterFactory;
-import rar.simu.Racer;
-import rar.simu.SocketCar;
 import rar.utils.Image;
 import rar.utils.SceneObject;
 
@@ -21,12 +19,12 @@ public class GameManager {
 
     Image im;
     SceneObject obj;
-    Racer player;
+    Player player;
 
     public GameManager() {
         im = new Image(1280, 720, ImageGetterFactory.createImageGetter());
         obj = new SceneObject();
-        player = new Racer(new SocketCar());
+        player = new Player(new SocketCar());
 
     }
 

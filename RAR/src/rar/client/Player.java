@@ -3,39 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.simu;
+package rar.client;
 
 import java.util.ArrayList;
+import rar.server.Bullet;
+import rar.junk.RacerListener;
 
 /**
  *
  * @author rvlander
  */
-public class Racer {
+public class Player {
 
-    private ArrayList<RacerListener> listeners;
     private ConcreteCar car;
 
-    public Racer() {
-
-    }
-
-    public Racer(ConcreteCar car) {
+    public Player(ConcreteCar car) {
         this.car = car;
-    }
-
-    public void update(double deltaTime) {
-    }
-
-    public void addListener(RacerListener l) {
-        listeners.add(l);
     }
 
     public void shoot() {
         Bullet b = new Bullet(this);
-        for (RacerListener rl : listeners) {
-            rl.bulletLaunched(b);
-        }
+        //reseau
     }
 
     public void turnLeft(double d) {
