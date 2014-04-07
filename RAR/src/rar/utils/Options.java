@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class Options {
 
     private static String sampler = "sampler";
+    private static String car = "car";
     private static String piIP = "piIP";
     private static String videoPort = "video_port";
     private static String controlPort = "control_port";
@@ -46,6 +47,7 @@ public class Options {
             Options.pop.load(new FileInputStream(f));
             if (!Options.validate()) {
                 setSamplerType("pi");
+                setCarType("socket");
                 setVideoPort(5001);
                 setControlPort(8888);
                 setPiIP("192.168.2.1");
@@ -66,6 +68,7 @@ public class Options {
     private static boolean validate() {
         boolean res = true;
         res &= Options.getSamplerType() != null;
+        res &= Options.getCarType() != null;
         res &= Options.getVideoPort() != null;
         res &= Options.getPiIP() != null;
         res &= Options.getControlPort() != null;
@@ -95,6 +98,15 @@ public class Options {
 
     public static void setSamplerType(String type) {
         pop.setProperty(sampler, type);
+        Options.save();
+    }
+
+    public static String getCarType() {
+        return pop.getProperty(car);
+    }
+
+    public static void setCarType(String type) {
+        pop.setProperty(car, type);
         Options.save();
     }
 

@@ -12,9 +12,9 @@ import javax.media.opengl.GLProfile;
 import rar.imageinput.ImageGetter;
 import rar.imageinput.ImageGetterFactory;
 import rar.server.Bullet;
-import rar.utils.Image;
+import rar.renderer.Image;
 import rar.utils.Options;
-import rar.utils.SceneObject;
+import rar.renderer.SceneObject;
 
 /**
  *
@@ -36,7 +36,7 @@ public class GameManager {
         
         image = new Image(Options.getImageWidth(), Options.getImageHeight());
         obj = new SceneObject();
-        player = new Player(new SocketCar());
+        player = new Player(ConcreteCarFactory.makeCar());
 
     }
 

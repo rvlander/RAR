@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.utils;
+package rar.renderer;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.util.texture.Texture;
@@ -178,26 +178,10 @@ public class Image {
     }
 
     private static String vertexShaderSource
-            = "in vec2 MCVertex;\n"
-            + "in vec2 TexCoord0;\n"
-            + "uniform mat3 PMatrix;\n"
-            + "varying vec2 TexCoord;\n"
-            + "void main () {\n"
-            + "TexCoord = TexCoord0;\n"
-            + "vec3 vertexM = PMatrix*vec3(MCVertex,1.0);"
-            + "gl_Position = vec4(vertexM.xy,0.0,1.0);\n"
-            + "}\n";
+            = Loader.readFile("data/shaders/image.vert");
 
     private static String fragShaderSource
-            = "varying vec2 TexCoord;\n"
-            + "uniform sampler2D image;\n"
-            + "void main(){\n"
-            + "vec4 color = texture(image,TexCoord.st);\n"
-            + "if(color.rgb == vec3(1.0,0.0,1.0)){\n"
-            + "color.a = 0.0;"
-            + "}\n"
-            + "gl_FragColor=color;\n"
-            + "}\n";
+            = Loader.readFile("data/shaders/image.frag");
 
     private int vertexPositionAttribute;
     private int vertexTexCoordAttribute;
