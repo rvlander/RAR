@@ -23,7 +23,7 @@ class StillImageGetter implements ImageGetter {
     
     public StillImageGetter() {
         try {
-            bi = ImageIO.read(new File("resources/cockpit.png"));
+            bi = ImageIO.read(new File("data/textures/cockpit.png"));
         } catch (IOException ex) {
             Logger.getLogger(StillImageGetter.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(0);

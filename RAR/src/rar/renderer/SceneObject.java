@@ -134,20 +134,10 @@ public class SceneObject {
     }
 
     private static String vertexShaderSource
-            = "in vec3 MCVertex;\n"
-            + "uniform mat4 MMatrix;"
-            + "uniform mat3 KK;\n"
-            + "void main () {\n"
-            + "vec4 x = MMatrix*vec4(MCVertex,1.0);"
-            + "vec3 xn = x.xyz/x.z;"
-            + "vec3 p = KK*xn;"
-            + "gl_Position = vec4(p.xy,0,1.0);\n"
-            + "}\n";
+            = Loader.readFile("data/shaders/object.vert");
 
     private static String fragShaderSource
-            = "void main(){\n"
-            + "gl_FragColor=vec4(1.0,1.0,0.0,1.0);\n"
-            + "}\n";
+            = Loader.readFile("data/shaders/object.frag");
 
     private int vertexPositionAttribute;
 
