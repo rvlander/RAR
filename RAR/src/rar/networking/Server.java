@@ -20,11 +20,9 @@ public class Server implements ConnectionListener {
 
     NetworkEngine networkEngine;
     ServerSocket socket;
-    ArrayList<Connection> connections;
 
     Server(NetworkEngine re) {
         networkEngine = re;
-        connections = new ArrayList<>();
         initializeServer();
     }
 
@@ -51,21 +49,20 @@ public class Server implements ConnectionListener {
     private void handleNewClient(Socket s) {
         System.out.println("New client " + s.getInetAddress().getHostAddress() + " connected.");
         Connection c = new Connection(s, this);
-        connections.add(c);
         new Thread(c).start();
     }
 
     @Override
     public void registered(Connection con, String name) {
         try {
-            networkEngine.addPlayer(name);
-            for (Connection c : connections) {
+            networkEngine.addPlayer(name, con);
+            for (Connection c : networkEngine.getPlayers()) {
                 if (c != con) {
                     c.register(name);
                 }
             }
 
-            for (String s : networkEngine.getPlayers()) {
+            for (String s : networkEngine.getNames()) {
                 con.register(s);
             }
         } catch (RacerAlreadyPresentException e) {
@@ -75,6 +72,13 @@ public class Server implements ConnectionListener {
 
     @Override
     public void raisedPlayerAlreadyPresentException() {
+    }
+
+    @Override
+    public void shot(Connection con, String name) {
+        for (Connection c : networkEngine.getPlayers()) {
+                    c.shoot(name);
+            }
     }
 
 }

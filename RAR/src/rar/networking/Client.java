@@ -62,4 +62,12 @@ public class Client implements ConnectionListener{
         listener.playerIsAlreadyPresentException();
     }
     
+    @Override
+    public void shot(Connection con, String name){
+        listener.shot(name);
+    }
+    
+    public void shoot(String name){
+        connection.shoot(name);
+    }
 }

@@ -15,6 +15,7 @@ public interface ConnectionListener {
     public void registered(Connection con, String name);
 
     public void raisedPlayerAlreadyPresentException();
+    public void shot(Connection con, String name);
     
     
 }

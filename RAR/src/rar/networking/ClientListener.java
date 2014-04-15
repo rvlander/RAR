@@ -15,5 +15,7 @@ public interface ClientListener {
     public void register(String name);
 
     public void playerIsAlreadyPresentException();
+
+    public void shot(String name);
     
 }

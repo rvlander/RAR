@@ -8,7 +8,9 @@ package rar.networking;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 import rar.junk.World;
 import rar.networking.Connection;
 /*import rar.networking.RacerAlreadyPresentException;
@@ -19,21 +21,25 @@ import rar.networking.RacerAlreadyPresentException;
  */
 public class NetworkEngine {
     
-    ArrayList<String> players;
+    HashMap<String,Connection> players;
     
     public NetworkEngine(){
-        players = new ArrayList<>();
+        players = new HashMap<>();
     }
     
-    public void addPlayer(String name) throws RacerAlreadyPresentException{
-        if(players.contains(name)){
+    public void addPlayer(String name,Connection con) throws RacerAlreadyPresentException{
+        if(players.containsKey(name)){
             throw new RacerAlreadyPresentException();
         }
-        players.add(name);
+        players.put(name,con);
     }
 
-    public ArrayList<String> getPlayers() {
-        return players;
+    public Collection<Connection> getPlayers() {
+        return players.values();
+    }
+    
+    public Set<String> getNames(){
+        return players.keySet();
     }
     
     

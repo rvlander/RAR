@@ -21,6 +21,7 @@ public class Connection implements Runnable {
     
     private final char registerCommand ='R';
     private final char exceptionCommand ='E';
+    private final char shootCommand ='S';
     
     
     private final String playerAlreadyPresentExceptionCode ="PAP";
@@ -64,6 +65,9 @@ public class Connection implements Runnable {
             case exceptionCommand:
                 handleException(this,line.substring(1));
                 break;
+            case shootCommand:
+                listener.shot(this,line.substring(1));
+                break;
             default:
                 throw new UnknownCommandException();
         }
@@ -86,6 +90,10 @@ public class Connection implements Runnable {
     private void sendMessage(String message){
         printWriter.println(message);
         printWriter.flush();
+    }
+
+    void shoot(String name) {
+        sendMessage(shootCommand+name);
     }
 
 }
