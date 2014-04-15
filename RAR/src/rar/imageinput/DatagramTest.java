@@ -26,7 +26,7 @@ public class DatagramTest {
             
             System.out.println("UDP Listening");
             
-            DatagramChannel chan = channel.connect(new InetSocketAddress("192.168.1.87",5001));
+            DatagramChannel chan = channel.connect(new InetSocketAddress("192.168.1.85",5001));
             
             ByteBuffer buf = ByteBuffer.allocate(48);
             

@@ -20,7 +20,7 @@ import rar.renderer.SceneObject;
  *
  * @author rvlander
  */
-public class GameManager {
+public class RaceManager {
 
     Image image;
     ImageGetter imageGetter;
@@ -28,7 +28,7 @@ public class GameManager {
     Player player;
     ArrayList<Bullet> bullets;
 
-    public GameManager() {
+    public RaceManager() {
         
         bullets = new ArrayList<>();
         imageGetter = ImageGetterFactory.createImageGetter();

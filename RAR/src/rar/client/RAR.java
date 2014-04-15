@@ -24,7 +24,7 @@ import rar.inputs.KeyManager;
  */
 public class RAR implements GLEventListener {
 
-    private GameManager gameManager;
+    private RaceManager gameManager;
     private long before;
     private GLProfile glp;
 
@@ -33,7 +33,7 @@ public class RAR implements GLEventListener {
     }
 
     public RAR(GLProfile p) {
-        gameManager = new GameManager();
+        gameManager = new RaceManager();
         before = new Date().getTime();
         glp = p;
     }
