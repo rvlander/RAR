@@ -4,14 +4,16 @@
  * and open the template in the editor.
  */
 
-package rar.server;
-
-import java.io.Serializable;
+package rar.networking;
 
 /**
  *
  * @author rvlander
  */
-class Racer implements Serializable{
+public interface ClientListener {
+
+    public void register(String name);
+
+    public void playerIsAlreadyPresentException();
     
 }

@@ -4,15 +4,17 @@
  * and open the template in the editor.
  */
 
-package rar.server;
+package rar.networking;
 
 /**
  *
  * @author rvlander
  */
-class RacerAlreadyPresentException extends Exception {
+public interface ConnectionListener {
+    
+    public void registered(Connection con, String name);
 
-    public RacerAlreadyPresentException() {
-    }
+    public void raisedPlayerAlreadyPresentException();
+    
     
 }

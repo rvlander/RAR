@@ -32,6 +32,7 @@ public class Options {
     private static String sMax = "s_max";
     private static String vMin = "v_min";
     private static String vMax = "v_max";
+    private static String serverIP = "server_ip";
 
     private static String config_file = System.getProperty("user.home") + "/.config/RAR/all.config";
     private static TypedProperties pop;
@@ -59,6 +60,7 @@ public class Options {
                 setSMax(255);
                 setVMin(0);
                 setVMax(255);
+                setPiIP("127.0.0.1");
             }
         } catch (IOException ex) {
             Logger.getLogger(Options.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,6 +72,7 @@ public class Options {
         res &= Options.getSamplerType() != null;
         res &= Options.getCarType() != null;
         res &= Options.getVideoPort() != null;
+        res &= Options.getPiIP() != null;        
         res &= Options.getPiIP() != null;
         res &= Options.getControlPort() != null;
         res &= Options.getImageWidth() != null;
@@ -114,8 +117,17 @@ public class Options {
         return pop.getInetAddressProperty(piIP);
     }
 
-    public static void setPiIP(String type) {
-        pop.setProperty(piIP, type);
+    public static void setPiIP(String ip) {
+        pop.setProperty(piIP, ip);
+        Options.save();
+    }
+
+    public static InetAddress getServerIP() {
+        return pop.getInetAddressProperty(serverIP);
+    }
+
+    public static void setServerIP(String ip) {
+        pop.setProperty(serverIP, ip);
         Options.save();
     }
 

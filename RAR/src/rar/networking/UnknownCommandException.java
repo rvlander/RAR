@@ -3,20 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.client;
+
+package rar.networking;
 
 /**
  *
  * @author rvlander
  */
-public interface ConcreteCar {
+class UnknownCommandException extends Exception {
 
-    public void turnLeft(double d);
-
-    public void turnRight(double d);
-
-    public void moveForward(double d);
-
-    public void moveBackward(double d);
-
+    public UnknownCommandException() {
+    }
+    
 }

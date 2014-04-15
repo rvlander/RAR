@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package rar.server;
+package rar.networking;
 
 /**
  *
@@ -13,10 +13,10 @@ package rar.server;
 public class RARServer {
     
     Server server;
-    RaceEngine raceEngine;
+    NetworkEngine raceEngine;
     
     public RARServer(){
-        raceEngine = new RaceEngine();
+        raceEngine = new NetworkEngine();
         server = new Server(raceEngine);
     }
     

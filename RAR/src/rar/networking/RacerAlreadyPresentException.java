@@ -4,16 +4,15 @@
  * and open the template in the editor.
  */
 
-package rar.junk;
-
-import rar.simu.Bullet;
+package rar.networking;
 
 /**
  *
  * @author rvlander
  */
-public interface RacerListener {
-    
-    public void bulletLaunched(Bullet b);
+class RacerAlreadyPresentException extends Exception {
+
+    public RacerAlreadyPresentException() {
+    }
     
 }

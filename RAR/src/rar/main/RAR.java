@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.client;
+package rar.main;
 
 import com.jogamp.opengl.util.Animator;
 import java.awt.event.WindowAdapter;
@@ -17,6 +17,7 @@ import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFrame;
 import rar.inputs.KeyManager;
+import rar.simu.RaceManager;
 
 /**
  *

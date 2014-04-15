@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.client;
+package rar.simu;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import javax.media.opengl.GL4;
 import javax.media.opengl.GLProfile;
 import rar.imageinput.ImageGetter;
 import rar.imageinput.ImageGetterFactory;
-import rar.server.Bullet;
 import rar.renderer.Image;
 import rar.utils.Options;
 import rar.renderer.SceneObject;

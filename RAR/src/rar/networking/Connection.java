@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rar.server;
+package rar.networking;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -19,22 +18,24 @@ import java.util.logging.Logger;
  * @author rvlander
  */
 public class Connection implements Runnable {
+    
+    private final char registerCommand ='R';
+    private final char exceptionCommand ='E';
+    
+    
+    private final String playerAlreadyPresentExceptionCode ="PAP";
 
-    private Socket socket;
-    private RaceEngine raceEngine;
-    private String name;
+    private ConnectionListener listener;
 
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
-    private ObjectOutputStream objectWriter;
 
-    public Connection(Socket s, RaceEngine re) {
+
+    public Connection(Socket s, ConnectionListener list) {
         try {
-            raceEngine = re;
-            socket = s;
+            listener=list;
             bufferedReader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             printWriter = new PrintWriter(s.getOutputStream());
-            objectWriter = new ObjectOutputStream(s.getOutputStream());
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(0);
@@ -57,22 +58,34 @@ public class Connection implements Runnable {
     private void handleLine(String line) throws UnknownCommandException, RacerAlreadyPresentException, IOException {
         char c = line.charAt(0);
         switch(c){
-            case 'R':
-                register(line.substring(1));
+            case registerCommand:
+                listener.registered(this,line.substring(1));
                 break;
-            case 'G':
-                sendWorld();
+            case exceptionCommand:
+                handleException(this,line.substring(1));
+                break;
             default:
                 throw new UnknownCommandException();
         }
     }
 
-    private void register(String name) throws RacerAlreadyPresentException {
-        raceEngine.addRacer(name);
+    public void register(String name) {
+        sendMessage(registerCommand+name);
     }
 
-    private void sendWorld() throws IOException {
-        objectWriter.writeObject(raceEngine.getWorld());
+    public void raisePlayerAlreadyPresentException() {
+        sendMessage(exceptionCommand+playerAlreadyPresentExceptionCode);
+    }
+    
+    private void handleException(Connection con, String exceptionCode) {
+        if(exceptionCode.equals(playerAlreadyPresentExceptionCode)){
+            listener.raisedPlayerAlreadyPresentException();
+        }
+    }
+    
+    private void sendMessage(String message){
+        printWriter.println(message);
+        printWriter.flush();
     }
 
 }

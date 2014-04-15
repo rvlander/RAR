@@ -4,20 +4,22 @@
  * and open the template in the editor.
  */
 
-package rar.server;
+package rar.junk;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import rar.junk.RacerListener;
+import rar.simu.Bullet;
 
 /**
  *
  * @author rvlander
  */
-public class World implements RacerListener, Serializable {
+public class World {//implements RacerListener, Serializable {
     
-    private HashMap<String,Racer> racers;
+    /*private HashMap<String,Racer> racers;
     private ArrayList<Bullet> bullets;
     
     public World(HashMap<String,Racer> r){
@@ -29,7 +31,7 @@ public class World implements RacerListener, Serializable {
         /*for(Player racer : racers){
         }
         up*///dateBullets(deltaTime);
-    }
+    /*}
 
     @Override
     public void bulletLaunched(Bullet b) {
@@ -38,9 +40,9 @@ public class World implements RacerListener, Serializable {
 
     private void updateBullets(double deltaTime) {
         for(Bullet b : bullets){
-            b.update(deltaTime);
+         //   b.update(deltaTime);
         }
         //collide bullet
-    }
+    }*/
     
 }

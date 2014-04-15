@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package rar.server;
+package rar.simu;
 
+import rar.simu.Racer;
 import java.io.Serializable;
 
 /**
